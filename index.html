@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>古民家カフェ 時の栞 - 読書と珈琲の静かな時間</title>
+    
+    <!-- ファビコンの設定 -->
+    <link rel="icon" href="icon.png" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&family=Zen+Old+Mincho&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --wood-dark: #3e2723;
+            --paper-light: #f5f2e9;
+            --accent-amber: #b8860b;
+        }
+
+        body {
+            font-family: 'Shippori Mincho', serif;
+            background-color: var(--paper-light);
+            color: var(--wood-dark);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .old-paper {
+            background-image: radial-gradient(#e5e0d0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* スクロールアニメーション */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.2s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-link:hover {
+            color: var(--accent-amber);
+            border-bottom: 1px solid var(--accent-amber);
+        }
+
+        /* カードの演出 */
+        .entry-card {
+            position: relative;
+            overflow: hidden;
+            background: white;
+            transition: transform 0.4s ease;
+        }
+        
+        .entry-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .image-zoom {
+            transition: transform 0.8s ease;
+        }
+
+        .entry-card:hover .image-zoom {
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ニュースバナーのデザイン調整 */
+        .news-banner {
+            display: block;
+            height: 40px; /* 少しスリムに */
+            width: 100%;
+            background-color: var(--wood-dark); /* オレンジから焦げ茶色に変更 */
+            border-bottom: 1px solid var(--accent-amber); /* アクセントの金色の線 */
+            overflow: hidden;
+        }
+
+        /* バナー内コンテンツ */
+        .news-banner__content {
+            display: inline-block;
+            color: var(--paper-light); /* 文字色を生成り色に */
+            line-height: 40px;
+            padding-left: 100%; /* 右端の画面外からスタート */
+            white-space: nowrap;
+            animation: animate-banner 35s linear infinite; /* 流れる速度（秒数で調整） */
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+        }
+
+        /* バナー内の要素をすべて選択 */
+        .news-banner__content > * {
+            display: inline-block;
+            margin-right: 3rem; /* お知らせとお知らせの間の隙間 */
+        }
+
+        /* 横にスクロールさせるアニメーション */
+        @keyframes animate-banner {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+    </style>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3S9SP9BZY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-F3S9SP9BZY');
+</script>
+
+<body class="old-paper">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-[#f5f2e9]/90 border-b border-[#d1ccb9] px-6 py-4 flex justify-between items-center">
+        <!-- ▼ ここを <a> タグで囲んでリンクにしました（ホバー時に少し薄くなる効果もつけています） ▼ -->
+        <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+            <img src="logo.png" alt="時の栞 ロゴ" class="h-10 w-auto object-contain">
+            <div class="text-2xl font-bold tracking-widest">時の栞</div>
+        </a>
+        <!-- ▲ ここまで ▲ -->
+        
+        <div class="hidden md:flex space-x-8 text-sm">
+            <a href="index.html#about" class="nav-link">当店</a>
+            <a href="menu.html" class="nav-link">お品書き</a>
+            <a href="library.html" class="nav-link">今月の一冊</a>
+            <a href="goods.html" class="nav-link">栞の雑貨</a>
+            <a href="coupon.html" class="nav-link">珈琲帖</a>
+            <a href="index.html#access" class="nav-link">道標</a>
+        </div>
+        <div id="hamburger-btn" class="md:hidden text-2xl cursor-pointer z-50">☰</div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-[#f5f2e9]/95 z-40 hidden flex-col items-center justify-center space-y-8 text-xl backdrop-blur-sm">
+        <a href="index.html#about" class="nav-link mobile-link">当店</a>
+        <a href="menu.html" class="nav-link mobile-link">お品書き</a>
+        <a href="library.html" class="nav-link mobile-link">今月の一冊</a>
+        <a href="goods.html" class="nav-link mobile-link">栞の雑貨</a>
+        <a href="coupon.html" class="nav-link mobile-link">珈琲帖</a>
+        <a href="index.html#access" class="nav-link mobile-link">道標</a>
+    </div>
+
+    <!-- ナビゲーションの高さ分（約74px）だけ余白を空けて、バナーが隠れないようにする -->
+    <div class="pt-[74px]">
+        <div class="news-banner">
+            <div class="news-banner__content">
+                <span>【季節のお品書き】春限定の「桜のシフォンケーキ」と「春風ブレンド」のご提供をはじめました。</span>
+                <span>【営業時間のお知らせ】誠に勝手ながら、来週の火曜・水曜は連休とさせていただきます。</span>
+                <span>【今月の一冊】更新しました。雨の日にゆっくり読みたい短編集をご紹介しています。</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="h-screen flex items-center justify-center hero-bg text-white relative">
+        <div class="text-center px-6">
+            <!-- ▼ スマホの時だけ改行されるように <br class="md:hidden"> を追加しました ▼ -->
+            <h1 class="text-4xl md:text-6xl mb-6 tracking-[0.2em] opacity-0" style="animation: fadeIn 2s ease-out forwards;">
+                古民家カフェ<br class="md:hidden"> 時の栞
+            </h1>
+            <p class="text-lg md:text-xl tracking-widest opacity-0" style="animation: fadeIn 2s ease-out 1s forwards;">
+                一冊の本と、一杯の珈琲。<br class="md:hidden">時が止まる場所。
+            </p>
+            <!-- ▲ ここまで ▲ -->
+        </div>
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+            ↓
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 px-6 max-w-4xl mx-auto text-center reveal">
+        <h2 class="text-2xl mb-12 border-b border-[#3e2723] inline-block pb-2">当店について</h2>
+        <div class="flex flex-col md:flex-row items-center gap-12 text-left leading-loose">
+            <div class="md:w-1/2">
+                <p class="mb-6">
+                    喧騒を離れた路地の奥、ひっそりと佇む古民家。<br>
+                    ここは、止まってしまった時間を動かすための、あるいは動いている時間を止めるための栞（しおり）のような場所。
+                </p>
+                <p class="mb-6">
+                    店主が選んだ古書と、丁寧に淹れた珈琲をご用意して、あなたの訪れをお待ちしております。
+                </p>
+            </div>
+            <div class="md:w-1/2">
+                <div class="border-8 border-white shadow-xl rotate-2 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1749733600960-03d7cc33a06c?q=80&w=774&auto=format&fit=crop" alt="店内の風景">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Cards (詳細ページへの入り口) -->
+    <section id="navigation" class="py-24 px-6 bg-[#3e2723]">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-2xl mb-16 text-center text-[#f5f2e9] tracking-widest underline underline-offset-8">栞をめくる</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- お品書きへの入り口 -->
+                <a href="menu.html" class="entry-card rounded-lg shadow-2xl reveal group">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover image-zoom" alt="珈琲とお菓子">
+                    </div>
+                    <div class="p-8 text-center bg-[#f5f2e9]">
+                        <h3 class="text-xl font-bold mb-4">お品書き</h3>
+                        <p class="text-sm leading-relaxed opacity-80 mb-6">
+                            深煎りのブレンド珈琲や、懐かしい味わいのデザートをご用意しております。
+                        </p>
+                        <span class="inline-block text-xs border border-[#3e2723] px-4 py-2 group-hover:bg-[#3e2723] group-hover:text-white transition-colors">詳しく見る</span>
+                    </div>
+                </a>
+
+                <!-- 今月の一冊への入り口 -->
+                <a href="library.html" class="entry-card rounded-lg shadow-2xl reveal group" style="transition-delay: 0.1s;">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover image-zoom" alt="本棚">
+                    </div>
+                    <div class="p-8 text-center bg-[#f5f2e9]">
+                        <h3 class="text-xl font-bold mb-4">今月の一冊</h3>
+                        <p class="text-sm leading-relaxed opacity-80 mb-6">
+                            今月、店主が特におすすめしたい一冊をご紹介します。店内の蔵書もこちらから。
+                        </p>
+                        <span class="inline-block text-xs border border-[#3e2723] px-4 py-2 group-hover:bg-[#3e2723] group-hover:text-white transition-colors">詳しく見る</span>
+                    </div>
+                </a>
+
+                <!-- 雑貨への入り口 -->
+                <a href="goods.html" class="entry-card rounded-lg shadow-2xl reveal group" style="transition-delay: 0.2s;">
+                    <div class="h-64 overflow-hidden">
+                        <img src="logo_mag.png" class="w-full h-full object-cover image-zoom" alt="オリジナルマグカップ">
+                    </div>
+                    <div class="p-8 text-center bg-[#f5f2e9]">
+                        <h3 class="text-xl font-bold mb-4">栞の雑貨</h3>
+                        <p class="text-sm leading-relaxed opacity-80 mb-6">
+                            お店のロゴ入りマグカップや、日々の暮らしに寄り添うオリジナル雑貨のご案内。
+                        </p>
+                        <span class="inline-block text-xs border border-[#3e2723] px-4 py-2 group-hover:bg-[#3e2723] group-hover:text-white transition-colors">詳しく見る</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Access Section -->
+    <footer id="access" class="py-24 bg-[#f5f2e9] border-t border-[#d1ccb9]">
+        <div class="max-w-4xl mx-auto px-6 text-center reveal">
+            <h2 class="text-2xl mb-12 tracking-widest border-b border-[#3e2723] inline-block pb-2">道標 - Access</h2>
+            <div class="grid md:grid-cols-2 gap-12 text-left mb-12">
+                <div>
+                    <p class="font-bold mb-2">所在地</p>
+                    <p class="mb-6">〒000-0000<br>〇〇県〇〇市 〇〇町 1-2-3</p>
+                    <p class="font-bold mb-2">営業時間</p>
+                    <p class="mb-2">11:00 - 18:00</p>
+                    <p class="text-sm opacity-70 italic">※ラストオーダー 17:30</p>
+                    <p class="mt-4 font-bold mb-2">定休日</p>
+                    <p>火曜日・水曜日</p>
+                </div>
+                <div>
+                    <div class="w-full h-64 bg-gray-200 shadow-inner rounded-lg overflow-hidden">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d5279.24266902339!2d139.7101596600757!3d35.73823819835974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sja!2sjp!4v1772070393470!5m2!1sja!2sjp" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="text-sm opacity-40">
+                &copy; 2026 古民家カフェ 時の栞.
+            </div>
+        </div>
+    </footer>
+
+    <!-- スクロールアニメーション用スクリプト -->
+    <script>
+        const handleScroll = () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('load', handleScroll);
+    </script>
+    <script src="common.js"></script>
+
+<!-- **3.** もちろん、各HTMLファイルの上のほうに、ハンバーガーメニュー本体のHTML（`<nav>` の部分と `<div id="mobile-menu">...</div>` の部分）は全ページにコピーして置いてくださいね。
+
+これだけで、どのページを作っても `common.js` を読み込むだけで同じハンバーガーメニューとスクロールの動きが適用されるようになります！ -->
+</body>
+</html>

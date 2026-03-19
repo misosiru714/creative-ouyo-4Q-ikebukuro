@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お品書き - 古民家カフェ 時の栞</title>
+    
+    <!-- ファビコンの設定 -->
+    <link rel="icon" href="icon.png" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&family=Zen+Old+Mincho&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --wood-dark: #3e2723;
+            --paper-light: #f5f2e9;
+            --accent-amber: #b8860b;
+        }
+
+        body {
+            font-family: 'Shippori Mincho', serif;
+            background-color: var(--paper-light);
+            color: var(--wood-dark);
+            scroll-behavior: smooth;
+        }
+
+        .old-paper {
+            background-image: radial-gradient(#e5e0d0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-amber);
+            border-bottom: 1px solid var(--accent-amber);
+        }
+
+        .menu-category {
+            border-bottom: 2px solid var(--wood-dark);
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            letter-spacing: 0.2em;
+        }
+
+        .menu-item {
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(62, 39, 35, 0.03);
+            transform: translateX(5px);
+        }
+
+        /* スクロールアニメーション */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="old-paper">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-[#f5f2e9]/90 border-b border-[#d1ccb9] px-6 py-4 flex justify-between items-center">
+        <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+            <img src="logo.png" alt="時の栞 ロゴ" class="h-10 w-auto object-contain">
+            <div class="text-2xl font-bold tracking-widest">時の栞</div>
+        </a>
+        
+        <div class="hidden md:flex space-x-8 text-sm">
+            <a href="index.html#about" class="nav-link">当店</a>
+            <a href="menu.html" class="nav-link">お品書き</a>
+            <a href="library.html" class="nav-link">今月の一冊</a>
+            <a href="goods.html" class="nav-link">栞の雑貨</a>
+            <a href="index.html#access" class="nav-link">道標</a>
+        </div>
+        <div id="hamburger-btn" class="md:hidden text-2xl cursor-pointer z-50">☰</div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-[#f5f2e9]/95 z-40 hidden flex-col items-center justify-center space-y-8 text-xl backdrop-blur-sm">
+        <a href="index.html#about" class="nav-link mobile-link">当店</a>
+        <a href="menu.html" class="nav-link mobile-link">お品書き</a>
+        <a href="library.html" class="nav-link mobile-link">今月の一冊</a>
+        <a href="goods.html" class="nav-link mobile-link">栞の雑貨</a>
+        <a href="index.html#access" class="nav-link mobile-link">道標</a>
+    </div>
+
+    <!-- Header Section -->
+    <header class="pt-32 pb-12 text-center bg-white/30">
+        <h1 class="text-3xl md:text-4xl tracking-[0.3em] font-bold mb-4">お品書き</h1>
+        <p class="text-sm opacity-70 tracking-widest">ひとつひとつ、心を込めて。</p>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-16">
+        
+        <!-- Drinks Section -->
+        <section class="mb-24 reveal">
+            <h2 class="text-2xl menu-category">お飲み物</h2>
+            <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
+                <div class="menu-item p-2">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <span class="text-lg font-bold">時の栞ブレンド</span>
+                        <span class="font-serif">¥420</span>
+                    </div>
+                    <p class="text-xs opacity-70">当店自慢の深煎り。チョコレートのようなコクと苦味。</p>
+                </div>
+                <div class="menu-item p-2">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <span class="text-lg font-bold">琥珀のカフェオレ</span>
+                        <span class="font-serif">¥480</span>
+                    </div>
+                    <p class="text-xs opacity-70">たっぷりのミルクと、濃厚なエスプレッソのハーモニー。</p>
+                </div>
+                <div class="menu-item p-2">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <span class="text-lg font-bold">季節の和紅茶</span>
+                        <span class="font-serif">¥450</span>
+                    </div>
+                    <p class="text-xs opacity-70">静岡県産の茶葉を使用。渋みが少なく、ほのかな甘み。</p>
+                </div>
+                <div class="menu-item p-2">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <span class="text-lg font-bold">林檎の生搾りジュース</span>
+                        <span class="font-serif">¥420</span>
+                    </div>
+                    <p class="text-xs opacity-70">信州産林檎を贅沢に。果実本来の甘酸っぱさ。</p>
+                </div>
+                <div class="menu-item p-2">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <span class="text-lg font-bold">SURUGIVA</span>
+                        <span class="font-serif">¥400</span>
+                    </div>
+                    <p class="text-xs opacity-70">北アルプスで取られた天然水を使ったサイダー。</p>
+                </div>
+                <div class="menu-item p-2">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <span class="text-lg font-bold">LIFEGUARD</span>
+                        <span class="font-serif">¥138</span>
+                    </div>
+                    <p class="text-xs opacity-70">ビタミン、アミノ酸を加えたエナジー系炭酸飲料の先駆けである</p>
+                </div>
+            </div>
+            <div class="mt-12 overflow-hidden rounded-lg shadow-xl h-64">
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="珈琲">
+            </div>
+        </section>
+
+        <!-- Food Section -->
+        <section class="mb-24 reveal">
+            <h2 class="text-2xl menu-category">お食事</h2>
+            <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
+                <div class="menu-item p-2">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <span class="text-lg font-bold">昔ながらのオムライス</span>
+                        <span class="font-serif">¥650</span>
+                    </div>
+                    <p class="text-xs opacity-70">特製ケチャップソースと、ふんわり卵の優しい味わい。</p>
+                </div>
+                <div class="menu-item p-2">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <span class="text-lg font-bold">厚切りバタートースト</span>
+                        <span class="font-serif">¥350</span>
+                    </div>
+                    <p class="text-xs opacity-70">地元のパン屋さんの食パンを使用。自家製ジャムを添えて。</p>
+                </div>
+                <div class="menu-item p-2">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <span class="text-lg font-bold">栞の特製カレー</span>
+                        <span class="font-serif">¥750</span>
+                    </div>
+                    <p class="text-xs opacity-70">10種類のスパイスを煮込んだ、少し辛口の欧風カレー。</p>
+                </div>
+                <div class="menu-item p-2">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <span class="text-lg font-bold">サンドイッチとフライドポテト</span>
+                        <span class="font-serif">¥340</span>
+                    </div>
+                    <p class="text-xs opacity-70">香ばしく焼いた厚切りパンに、たっぷりの具材を挟んで。カリッと揚げたポテトを添えた満足の一皿。</p>
+                </div>
+            </div>
+            <div class="mt-12 flex gap-4">
+                <div class="w-1/2 h-48 overflow-hidden rounded-lg shadow-md">
+                    <img src="https://images.unsplash.com/photo-1743148509702-2198b23ede1c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="w-full h-full object-cover" alt="オムライス">
+                </div>
+                <div class="w-1/2 h-48 overflow-hidden rounded-lg shadow-md">
+                    <img src="https://images.unsplash.com/photo-1615653633266-1ee0c84500b2?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="w-full h-full object-cover" alt="サンドイッチとフライドポテト">
+                </div>
+            </div>
+        </section>
+
+        <!-- Sweets Section -->
+        <section class="mb-24 reveal">
+            <h2 class="text-2xl menu-category">甘味</h2>
+            <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
+                <div class="menu-item p-2">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <span class="text-lg font-bold">自家製 カスタードプリン</span>
+                        <span class="font-serif">¥480</span>
+                    </div>
+                    <p class="text-xs opacity-70">少し固めのレトロスタイル。ほろ苦いカラメルと共に。</p>
+                </div>
+                <div class="menu-item p-2">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <span class="text-lg font-bold">抹茶のパウンドケーキ</span>
+                        <span class="font-serif">¥500</span>
+                    </div>
+                    <p class="text-xs opacity-70">宇治抹茶を贅沢に。しっとりとした大人の味わい。</p>
+                </div>
+                <div class="menu-item p-2">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <span class="text-lg font-bold">季節のフルーツパルフェ</span>
+                        <span class="font-serif">¥720</span>
+                    </div>
+                    <p class="text-xs opacity-70">旬の果物と自家製ジェラートの贅沢な重なり。</p>
+                </div>
+                <div class="menu-item p-2">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <span class="text-lg font-bold">チョコレートタルト</span>
+                        <span class="font-serif">¥590</span>
+                    </div>
+                    <p class="text-xs opacity-70">なめらかなチョコレートムースと各層の食感を楽しめるタルト</p>
+                </div>
+            </div>
+            <div class="mt-12 flex gap-4">
+                <div class="w-1/2 h-48 overflow-hidden rounded-lg shadow-md">
+                    <img src="https://images.unsplash.com/photo-1709880194932-8f33d90bdae8?q=80&w=737&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="w-full h-full object-cover" alt="プリン">
+                </div>
+                <div class="w-1/2 h-48 overflow-hidden rounded-lg shadow-md">
+                    <img src="https://images.unsplash.com/photo-1759324351433-c5a1063f8ac6?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="w-full h-full object-cover" alt="ケーキ">
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-[#3e2723] text-[#f5f2e9] text-center">
+        <p class="text-sm opacity-60 mb-4 tracking-widest">時の栞</p>
+        <a href="index.html" class="inline-block border border-[#f5f2e9] px-6 py-2 text-xs hover:bg-[#f5f2e9] hover:text-[#3e2723] transition-colors">
+            ホームへ戻る
+        </a>
+        <div class="mt-8 text-[10px] opacity-40 italic">
+            &copy; 2026 古民家カフェ 時の栞.
+        </div>
+    </footer>
+
+    <!-- スクロールアニメーション用スクリプト -->
+    <script>
+        const handleScroll = () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 50) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('load', handleScroll);
+    </script>
+
+    <script src="common.js"></script>
+
+</body>
+</html>

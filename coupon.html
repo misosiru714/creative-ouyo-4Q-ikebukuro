@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>珈琲帖（ポイントカード） - 古民家カフェ 時の栞</title>
+    
+    <link rel="icon" href="icon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&family=Zen+Old+Mincho&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --wood-dark: #3e2723;
+            --paper-light: #f5f2e9;
+            --accent-amber: #b8860b;
+        }
+
+        body {
+            font-family: 'Shippori Mincho', serif;
+            background-color: var(--paper-light);
+            color: var(--wood-dark);
+        }
+
+        .old-paper {
+            background-image: radial-gradient(#e5e0d0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-amber);
+            border-bottom: 1px solid var(--accent-amber);
+        }
+
+        .nav-link.active {
+            color: var(--accent-amber);
+            border-bottom: 1px solid var(--accent-amber);
+        }
+
+        .stamp-card {
+            background-color: #fffdf7;
+            border: 1px solid #d1ccb9;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .stamp-card::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid rgba(62, 39, 35, 0.1);
+            pointer-events: none;
+        }
+
+        .stamp-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            justify-items: center;
+        }
+
+        @media (max-width: 640px) {
+            .stamp-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 0.75rem;
+            }
+        }
+
+        /* スタンプ枠（正方形ベースに変更） */
+        .stamp-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px; /* 少し角丸の正方形 */
+            border: 2px dashed rgba(62, 39, 35, 0.3); /* 薄い焦げ茶色の点線 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background-color: transparent;
+            user-select: none;
+        }
+
+        @media (max-width: 640px) {
+            .stamp-box {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        /* スタンプ画像の設定 */
+        .stamp-img {
+            width: 120%; /* 枠から少しはみ出すくらいにして「押した感」を出す */
+            height: 120%;
+            object-fit: contain;
+            position: absolute;
+            pointer-events: none;
+            /* 画像に少し影をつけて立体感を出す */
+            filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.1)); 
+        }
+
+        /* スタンプが押された状態 */
+        .stamp-box.stamped {
+            border-color: transparent; /* 点線枠を消す */
+            transform: scale(1.05) rotate(calc(var(--rotation, 0) * 1deg));
+        }
+
+        /* 押した瞬間のアニメーション用 */
+        @keyframes stampPress {
+            0% { transform: scale(3) rotate(15deg); opacity: 0; }
+            50% { transform: scale(0.9) rotate(-5deg); opacity: 1; }
+            100% { transform: scale(1.05) rotate(calc(var(--rotation, 0) * 1deg)); opacity: 1; }
+        }
+
+        .stamp-box.just-stamped {
+            animation: stampPress 0.5s forwards;
+        }
+
+    </style>
+</head>
+<body class="old-paper flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-[#f5f2e9]/90 border-b border-[#d1ccb9] px-6 py-4 flex justify-between items-center">
+        <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+            <img src="logo.png" alt="時の栞 ロゴ" class="h-10 w-auto object-contain" onerror="this.style.display='none'">
+            <div class="text-2xl font-bold tracking-widest">時の栞</div>
+        </a>
+        
+        <div class="hidden md:flex space-x-8 text-sm">
+            <a href="index.html#about" class="nav-link">当店</a>
+            <a href="menu.html" class="nav-link">お品書き</a>
+            <a href="library.html" class="nav-link">今月の一冊</a>
+            <a href="goods.html" class="nav-link">栞の雑貨</a>
+            <a href="coupon.html" class="nav-link active">珈琲帖</a>
+            <a href="index.html#access" class="nav-link">道標</a>
+        </div>
+        <div id="hamburger-btn" class="md:hidden text-2xl cursor-pointer z-50">☰</div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-[#f5f2e9]/95 z-40 hidden flex-col items-center justify-center space-y-8 text-xl backdrop-blur-sm">
+        <a href="index.html#about" class="nav-link mobile-link">当店</a>
+        <a href="menu.html" class="nav-link mobile-link">お品書き</a>
+        <a href="library.html" class="nav-link mobile-link">今月の一冊</a>
+        <a href="goods.html" class="nav-link mobile-link">栞の雑貨</a>
+        <a href="coupon.html" class="nav-link mobile-link" style="color: var(--accent-amber);">珈琲帖</a>
+        <a href="index.html#access" class="nav-link mobile-link">道標</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-32 pb-24 px-4 sm:px-6 flex items-center justify-center">
+        <div class="max-w-2xl w-full">
+            
+            <div class="text-center mb-10">
+                <h1 class="text-3xl md:text-4xl font-bold tracking-[0.2em] mb-4">珈琲帖</h1>
+                <p class="text-sm opacity-80 tracking-widest">〜 時の栞 ポイントカード 〜</p>
+            </div>
+
+            <!-- スタンプカード本体 -->
+            <div class="stamp-card p-8 md:p-12 rounded-sm mb-12">
+                <div class="text-center mb-8">
+                    <p id="reward-message" class="text-sm md:text-base leading-loose">
+                        珈琲を一杯お召し上がりごとに、<br class="sm:hidden">印を一つ刻みます。<br>
+                        十の印が集まりましたら、<br class="sm:hidden">お好きな珈琲を一杯おもてなしいたします。
+                    </p>
+                </div>
+
+                <!-- スタンプのグリッド (10個) -->
+                <div class="stamp-grid mb-8" id="stamp-container">
+                    <!-- JavaScriptで生成されます -->
+                </div>
+
+                <div class="text-center">
+                    <p class="text-xl tracking-widest mb-2">
+                        現在の印： <span id="point-count" class="font-bold text-2xl">0</span> / 10
+                    </p>
+                </div>
+            </div>
+
+            <!-- 操作ボタン -->
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <button id="add-point-btn" onclick="addPoint()" class="bg-[#3e2723] text-[#f5f2e9] px-8 py-3 rounded hover:bg-[#2a1a17] transition-colors shadow-md w-full sm:w-auto tracking-widest flex items-center justify-center gap-2">
+                    <span class="text-xl">☕</span> ポイントを貯める
+                </button>
+                <button onclick="resetPoints()" class="text-sm text-[#3e2723] opacity-60 hover:opacity-100 underline underline-offset-4 px-4 py-2 w-full sm:w-auto">
+                    カードを新調する(リセット)
+                </button>
+            </div>
+            <p class="text-center text-xs opacity-50 mt-4">※本来はお店でQRコードを読み込む等の想定ですが、<br class="sm:hidden">今回はデモとしてボタンで貯まるようにしています。</p>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-[#f5f2e9] border-t border-[#d1ccb9] text-center">
+        <div class="text-sm opacity-40 tracking-widest">
+            &copy; 2026 古民家カフェ 時の栞.
+        </div>
+    </footer>
+
+    <!-- スクリプト -->
+    <script>
+        const STORAGE_KEY = 'tokinoshiori_points';
+        const MAX_POINTS = 10;
+        
+        let currentPoints = parseInt(localStorage.getItem(STORAGE_KEY)) || 0;
+        if (currentPoints > MAX_POINTS) currentPoints = MAX_POINTS;
+        if (currentPoints < 0) currentPoints = 0;
+
+        const stampContainer = document.getElementById('stamp-container');
+
+        // スタンプ枠の生成
+        function initStamps() {
+            stampContainer.innerHTML = '';
+            for (let i = 0; i < MAX_POINTS; i++) {
+                const box = document.createElement('div');
+                box.className = 'stamp-box';
+                // 画像スタンプも少し傾けてリアルさを出す
+                const randomRotation = Math.floor(Math.random() * 20) - 10;
+                box.style.setProperty('--rotation', randomRotation);
+                box.id = `stamp-${i}`;
+                stampContainer.appendChild(box);
+            }
+        }
+
+        // 画面の更新
+        function updateDisplay(animateLast = false) {
+            document.getElementById('point-count').textContent = currentPoints;
+            
+            for (let i = 0; i < MAX_POINTS; i++) {
+                const box = document.getElementById(`stamp-${i}`);
+                
+                if (i < currentPoints) {
+                    // スタンプが押された状態（画像を配置）
+                    box.classList.add('stamped');
+                    box.innerHTML = '<img src="stamp.png" alt="済" class="stamp-img">';
+                    
+                    if (animateLast && i === currentPoints - 1) {
+                        box.classList.add('just-stamped');
+                        setTimeout(() => box.classList.remove('just-stamped'), 600);
+                    }
+                } else {
+                    // スタンプが押されていない状態（薄いicon.pngを配置）
+                    box.classList.remove('stamped');
+                    box.classList.remove('just-stamped');
+                    // 薄いicon.pngを表示
+                    box.innerHTML = '<img src="icon.png" alt="未" class="stamp-img opacity-20" style="width: 40px; height: 40px; object-fit: contain;">';
+                }
+            }
+
+            // 満杯時の処理
+            const messageEl = document.getElementById('reward-message');
+            const btnEl = document.getElementById('add-point-btn');
+            
+            if (currentPoints >= MAX_POINTS) {
+                messageEl.innerHTML = '<span class="text-[#c93a40] font-bold text-lg">満願成就</span><br><br>10スタンプ集まりました！<br>本一冊無料です。<br>店主へこの画面をお見せください。';
+                btnEl.disabled = true;
+                btnEl.classList.add('opacity-50', 'cursor-not-allowed');
+                btnEl.innerHTML = 'カードは満杯です';
+            } else {
+                messageEl.innerHTML = '500円につき一スタンプ。<br class="sm:hidden">5こ集まったら、コーヒー一杯無料。<br>10集まったら、本一冊無料。';
+                btnEl.disabled = false;
+                btnEl.classList.remove('opacity-50', 'cursor-not-allowed');
+                btnEl.innerHTML = '<span class="text-xl">☕</span> ポイントを貯める';
+            }
+        }
+
+        function addPoint() {
+            if (currentPoints < MAX_POINTS) {
+                currentPoints++;
+                localStorage.setItem(STORAGE_KEY, currentPoints);
+                updateDisplay(true);
+            }
+        }
+
+        function resetPoints() {
+            if(confirm('溜まった印を消去し、カードを新調しますか？\n（この操作は元に戻せません）')) {
+                currentPoints = 0;
+                localStorage.setItem(STORAGE_KEY, currentPoints);
+                updateDisplay();
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initStamps();
+            updateDisplay();
+        });
+
+        // ハンバーガーメニュー
+        const btn = document.getElementById('hamburger-btn');
+        const menu = document.getElementById('mobile-menu');
+        if(btn && menu) {
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+                menu.classList.toggle('flex');
+                btn.innerText = menu.classList.contains('hidden') ? '☰' : '✕';
+            });
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                    menu.classList.remove('flex');
+                    btn.innerText = '☰';
+                });
+            });
+        }
+    </script>
+</body>
+</html>

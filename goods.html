@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雑貨案内 - 古民家カフェ 時の栞</title>
+    
+    <!-- ファビコンの設定 -->
+    <link rel="icon" href="icon.png" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&family=Zen+Old+Mincho&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --wood-dark: #3e2723;
+            --paper-light: #f5f2e9;
+            --accent-amber: #b8860b;
+        }
+
+        body {
+            font-family: 'Shippori Mincho', serif;
+            background-color: var(--paper-light);
+            color: var(--wood-dark);
+            scroll-behavior: smooth;
+        }
+
+        .old-paper {
+            background-image: radial-gradient(#e5e0d0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-amber);
+            border-bottom: 1px solid var(--accent-amber);
+        }
+
+        /* 商品カードの演出 */
+        .goods-card {
+            background: white;
+            border: 1px solid #d1ccb9;
+            transition: all 0.5s ease;
+        }
+        
+        .goods-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-5px);
+        }
+
+        .goods-image-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .goods-image-container img {
+            transition: transform 0.8s ease;
+        }
+
+        .goods-card:hover .goods-image-container img {
+            transform: scale(1.05);
+        }
+
+        /* スクロールアニメーション */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .price-tag {
+            font-family: 'Zen Old Mincho', serif;
+        }
+    </style>
+</head>
+<body class="old-paper">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-[#f5f2e9]/90 border-b border-[#d1ccb9] px-6 py-4 flex justify-between items-center">
+        <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+            <img src="logo.png" alt="時の栞 ロゴ" class="h-10 w-auto object-contain">
+            <div class="text-2xl font-bold tracking-widest">時の栞</div>
+        </a>
+        
+        <div class="hidden md:flex space-x-8 text-sm">
+            <a href="index.html#about" class="nav-link">当店</a>
+            <a href="menu.html" class="nav-link">お品書き</a>
+            <a href="library.html" class="nav-link">今月の一冊</a>
+            <a href="goods.html" class="nav-link">栞の雑貨</a>
+            <a href="coupon.html" class="nav-link">珈琲帖</a>
+            <a href="index.html#access" class="nav-link">道標</a>
+        </div>
+        <div id="hamburger-btn" class="md:hidden text-2xl cursor-pointer z-50">☰</div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-[#f5f2e9]/95 z-40 hidden flex-col items-center justify-center space-y-8 text-xl backdrop-blur-sm">
+        <a href="index.html#about" class="nav-link mobile-link">当店</a>
+        <a href="menu.html" class="nav-link mobile-link">お品書き</a>
+        <a href="library.html" class="nav-link mobile-link">今月の一冊</a>
+        <a href="goods.html" class="nav-link mobile-link">栞の雑貨</a>
+        <a href="index.html#access" class="nav-link mobile-link">道標</a>
+    </div>
+
+    <!-- Header Section -->
+    <header class="pt-32 pb-12 text-center bg-white/30">
+        <h1 class="text-3xl md:text-4xl tracking-[0.3em] font-bold mb-4">栞の雑貨</h1>
+        <p class="text-sm opacity-70 tracking-widest">日々の暮らしに、小さな栞を。</p>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-16">
+        
+        <section class="mb-24 reveal text-center max-w-2xl mx-auto">
+            <p class="leading-loose">
+                店内で使用している食器や、読書の時間をもっと楽しくする道具たち。<br>
+                「時の栞」で過ごした静かな時間の空気感を、<br>
+                ご自宅でも感じていただけるよう、ひとつひとつ選定しました。
+            </p>
+        </section>
+
+        <!-- Goods Grid (ここにJavaScriptで商品カードが自動生成されます) -->
+        <div id="goods-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <!-- JavaScriptによって中身が作られます -->
+        </div>
+
+        <!-- Note -->
+        <section class="mt-24 p-12 bg-white/50 border border-[#d1ccb9] rounded-sm reveal">
+            <h4 class="text-center font-bold mb-6 italic">雑貨のご購入について</h4>
+            <ul class="text-sm leading-loose max-w-md mx-auto list-disc list-inside opacity-80">
+                <li>お会計はレジにて承ります。</li>
+                <li>オンラインショップの開設も準備中です。今しばらくお待ちください。</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-[#3e2723] text-[#f5f2e9] text-center">
+        <p class="text-sm opacity-60 mb-4 tracking-widest">時の栞</p>
+        <a href="index.html" class="inline-block border border-[#f5f2e9] px-6 py-2 text-xs hover:bg-[#f5f2e9] hover:text-[#3e2723] transition-colors">
+            ホームへ戻る
+        </a>
+        <div class="mt-8 text-[10px] opacity-40 italic">
+            &copy; 2026 古民家カフェ 時の栞.
+        </div>
+    </footer>
+
+    <!-- 商品データの生成とスクロールアニメーション -->
+    <script>
+        // ==========================================
+        // 【グッズ追加用テンプレート】
+        // 新しい商品を増やす時は、このリストの下に同じ形式で { ... }, を追加してください。
+        //
+        // ★新機能: imageFit について
+        // 画像の切り取り方（高さ・位置）を指定します。
+        // "center" : 中央で切り取る（基本）
+        // "top"    : 上の方を残して切り取る
+        // "bottom" : 下の方を残して切り取る
+        // "contain": 切り取らずに画像全体を表示する
+        // ==========================================
+        const goodsList = [
+            {
+                category: "MAG CUP",
+                title: "オリジナルマグカップ",
+                description: "手に馴染むマットな質感と、落ち着いた藍色のロゴ。<br>たっぷり入るサイズで、読書のお供に最適です。",
+                price: "980",
+                image: "logo_mag.png",
+                imageFit: "center"
+            },
+            {
+                category: "BOOK MARK",
+                title: "当店オリジナルの栞",
+                description: "当店のキャラクター、<br>ムッシュ ジョバンニが描かれた栞。<br>あなたの読書の歴史を共に刻みます。",
+                price: "460",
+                image: "shiori.png",
+                imageFit: "center"  // 例：栞のような縦長の画像は「切り取らない」にすると綺麗です
+            },
+            {
+                category: "COASTAR",
+                title: "オリジナルコースター",
+                description: "当店オリジナルロゴ入りコースターです。",
+                price: "300",
+                image: "logo_coastar.png",
+                imageFit: "center"
+            },
+            {
+                category: "BAG",
+                title: "オリジナルバッグ",
+                description: "当店のロゴが織り込まれたバッグです。",
+                price: "1200",
+                image: "logo_bag.png",
+                imageFit: "bottom"
+            },
+            {
+                category: "COFFEE",
+                title: "時の栞ブレンド（100g）",
+                description: "お店で提供している深煎り豆を、ご家庭でも。<br>挽きたての香りで、お部屋をカフェの空気に。",
+                price: "850",
+                image: "https://plus.unsplash.com/premium_photo-1675435644687-562e8042b9db?q=80&w=898&auto=format&fit=crop&ixlib=rb-4.1.0",
+                imageFit: "center" // 例：コーヒー豆の画像で下の方を見せたい場合
+            }
+        ];
+
+        // 商品カードをHTMLに生成して追加する処理
+        const container = document.getElementById('goods-container');
+        goodsList.forEach((item, index) => {
+            // 左から順にフワッと出るように遅延(delay)を計算
+            const delay = (index % 3) * 0.1; 
+            
+            // 画像の切り取り・表示方法を決定
+            let fitClass = "object-cover object-center"; // デフォルト
+            if (item.imageFit === "top") fitClass = "object-cover object-top";
+            if (item.imageFit === "bottom") fitClass = "object-cover object-bottom";
+            if (item.imageFit === "contain") fitClass = "object-contain object-center p-4"; // containの場合は少し余白(p-4)を入れると綺麗です
+            
+            const cardHTML = `
+                <div class="goods-card rounded-sm overflow-hidden reveal" style="transition-delay: ${delay}s;">
+                    <!-- モバイルでは h-64 (256px) に固定し、PC(md以上)では aspect-square になるように調整 -->
+                    <div class="goods-image-container h-64 md:h-auto md:aspect-square flex items-center justify-center">
+                        <img src="${item.image}" alt="${item.title}" class="w-full h-full ${fitClass}">
+                    </div>
+                    <div class="p-8 text-center">
+                        <span class="text-[10px] text-[#b8860b] tracking-[0.2em] mb-2 block">${item.category}</span>
+                        <h3 class="text-xl font-bold mb-4">${item.title}</h3>
+                        <p class="text-sm opacity-80 leading-relaxed mb-6">
+                            ${item.description}
+                        </p>
+                        <p class="price-tag text-lg border-t border-[#d1ccb9] pt-4">¥${item.price} <span class="text-xs">（税込）</span></p>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', cardHTML);
+        });
+
+        // スクロールアニメーション（生成後にも実行）
+        const handleScroll = () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 50) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', handleScroll);
+        // HTML生成直後にも一度実行して、最初から見えているカードを表示する
+        handleScroll();
+    </script>
+    <script src="common.js"></script>
+</body>
+</html>
